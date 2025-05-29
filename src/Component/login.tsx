@@ -14,7 +14,7 @@ const schema = z.object({
 type FormFeilds = z.infer<typeof schema>;
 const Login = () => {
     const navigate = useNavigate();
-    const { login } = useUser(); // Assuming you have a login function in your UserProvider
+    const { login } = useUser(); 
     const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<FormFeilds>({
         resolver: zodResolver(schema),
     });
