@@ -5,6 +5,7 @@ import Card from './Card';
 import Pagination from './Pagination';
 import '../App.css'
 import '../Style/Card.css'
+import Profile from "./Profile";
 
 interface products {
   id: number;
@@ -53,6 +54,7 @@ const [data, setData] = useState<products[]>([]);
   return data.length==0 ? (<h1>Not able to fetch data</h1>) : (
 
     <>
+    <Profile/>
     <h1>All Products</h1>
       <div className="card">
         {data.slice(start, end).map((item) => (

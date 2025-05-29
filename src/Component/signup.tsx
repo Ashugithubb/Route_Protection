@@ -1,10 +1,12 @@
 import React from "react";
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+ import { useUser } from "./UserData";
+import '../Style/signup.css';
 
-// Zod schema for validation
+
 const schema = z.object({
     fullName: z.string().min(1, "Full name is required"),
     email: z.string().email("Invalid email"),
@@ -23,12 +25,21 @@ const schema = z.object({
 type FormFeilds = z.infer<typeof schema>;
 
 const Signup = () => {
+    const navigate = useNavigate();
+    const { signup } = useUser(); 
     const { register, handleSubmit, formState: { errors } } = useForm<FormFeilds>({
         resolver: zodResolver(schema),
     });
 
     const onSubmit: SubmitHandler<FormFeilds> = (data) => {
-        console.log(data);
+        const userData = {
+            fullName: data.fullName,
+            email: data.email,
+            password: data.password,
+        };
+        signup(userData); 
+        alert("Signup successful!");
+        navigate("/login");
     };
 
     return (
@@ -47,9 +58,9 @@ const Signup = () => {
                 <input {...register("confirm")} type="password" placeholder='Confirm Password' />
                 {errors.confirm && <div className='text-red-500'>{errors.confirm.message}</div>}
 
-                <button id="b1" type="submit">Sign up</button>
-                <Link id="b2" to="/login">
-                    <button type="button">Login</button>
+                <button id="b11" type="submit">Sign up</button>
+                <Link  to="/login">
+                    <button id="b21" type="button">Login</button>
                 </Link>
             </form>
         </>

@@ -3,7 +3,7 @@ import React, { useContext, useState, createContext, type ReactNode } from "reac
 interface user {
     fullName: string;
     email: string;
-    passsword: string;
+    password: string;
 }
 
 interface UserContextType {
@@ -37,7 +37,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     };
 
     const login = (email: string, password: string) => {
-        if (userdata && userdata.email === email && userdata.passsword === password) {
+        if (userdata && userdata.email === email && userdata.password === password) {
             setIsAuthenticated(true);
             return true;
         }
