@@ -11,9 +11,9 @@ function App() {
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+       <Route path="/home" element={<Home />} />
         <Route element={<ProtectedRoutes />}>
-      
-          <Route path="/home" element={<Home />} />
+        
         </Route>
       </Routes>
     </div>
