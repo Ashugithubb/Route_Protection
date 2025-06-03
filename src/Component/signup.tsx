@@ -41,7 +41,7 @@ const Signup = () => {
             email: data.email,
             password: data.password,
         };
-        dispatch(signup(userData));  // dispatch your Redux action here
+        dispatch(signup(userData));  
         alert("Signup successful!");
         navigate("/login");
     };

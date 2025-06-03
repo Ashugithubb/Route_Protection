@@ -22,16 +22,20 @@ const Card: React.FC<Items> = (props) => {
           <h5>{props.title}</h5>
           <h5><i className="fa-solid fa-indian-rupee-sign"></i>{props.price}</h5>
           <h6>{props.rating}/5</h6>
-          <button onClick={(e) => {
-            e.stopPropagation()
-            props.onAddToCart({
-              id: props.id,
-              title: props.title,
-              price: props.price,
-              rating: props.rating,
-              thumbnail: props.thumbnail,
-            })
-          }}>Add to Cart</button> {/* Add this button */}
+          <button onClick={ (e) => {
+            // console.log("cart clicked")
+              e.stopPropagation()
+              props.onAddToCart({
+                id: props.id,
+                title: props.title,
+                price: props.price,
+                rating: props.rating,
+                thumbnail: props.thumbnail,
+              })
+            }
+          }>
+            Add to Cart
+          </button> 
         </div>
       </div>
     </div>

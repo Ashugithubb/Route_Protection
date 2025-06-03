@@ -16,18 +16,14 @@ function App() {
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-<<<<<<< HEAD
-      <Route path="/product/:id" element={<ProductDetail/>} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
-        <Route path="/home" element={<Home cart={cart} setCart={setCart} />} />
+       
         <Route element={<ProtectedRoutes />}>
-          
-=======
-       <Route path="/home" element={<Home />} />
-        <Route element={<ProtectedRoutes />}>
-        
->>>>>>> 408393231c021b47877ab72a39aba1cf2b0e2e08
-        </Route>
+          <Route path="/home" element={<Home cart={cart} setCart={setCart} />} />
+          <Route element={<ProtectedRoutes />}>
+          </Route>
+          </Route>
       </Routes>
     </div>
   );

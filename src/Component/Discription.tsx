@@ -13,7 +13,7 @@ interface Product {
 }
 
 const ProductDetail = () => {
-  const { id } = useParams(); // <-- gets ID from URL
+  const { id } = useParams(); 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import logo from '../assets/logo.png';
 import cart from '../assets/cart.png';
 import '../Style/Navbar.css';
-import { Navigate,Outlet, Link, useNavigate } from 'react-router-dom';
+import {Outlet, Link, useNavigate } from 'react-router-dom';
 
 interface NavProps {
     currentPage: number;

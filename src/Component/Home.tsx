@@ -27,28 +27,34 @@ const Home: React.FC<HomeProps> = ({ cart, setCart }) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(0);
+   const [totalProducts,  setToatlProducts] = useState<number>(0)
+
+  const PAGE_SIZE = 10;
+  const start = currentPage * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_URL}`)
+    axios.get(`${import.meta.env.VITE_BASE_URL + `?limit=${PAGE_SIZE}&skip=${start}`}`)
       .then((res) => {
         setData(res.data.products);
+       setToatlProducts(res.data.total);
         setLoading(false);
       })
       .catch((err) => {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  },[currentPage]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  const PAGE_SIZE = 10;
-  const totalProducts = data.length;
-  const noOfPage = Math.ceil(totalProducts / PAGE_SIZE);
-  const start = currentPage * PAGE_SIZE;
-  const end = start + PAGE_SIZE;
 
+  // const totalProducts = data.length;
+  
+  const noOfPage = Math.ceil(totalProducts / PAGE_SIZE);
+ 
+  
   function handlePageChange() {
     setCurrentPage((prev) => prev);
   }
@@ -67,7 +73,7 @@ const Home: React.FC<HomeProps> = ({ cart, setCart }) => {
   function handleDeleteFromCart(index: number) {
   setCart((prevCart) => prevCart.filter((_, i) => i !== index));
 }
-  return data.length == 0 ? (<h1>Not able to fetch data</h1>) : (
+  return data.length == 0 ? (<h1>No Product is Available</h1>) : (
     <>
       <Navbar
         currentPage={currentPage}
@@ -77,12 +83,7 @@ const Home: React.FC<HomeProps> = ({ cart, setCart }) => {
       <Profile />
       <h1>All Products</h1>
       <div className="card">
-        {data.slice(start, end).map((item) => (
-          // <Link
-          //   to={`/product/${item.id}`}
-          //   key={item.id}
-          //   style={{ textDecoration: "none", color: "inherit" }}
-          // >
+        {data.map((item) => (
           <div onClick={() => {
               navigate(`/product/${item.id}`)
             }}>
@@ -96,7 +97,7 @@ const Home: React.FC<HomeProps> = ({ cart, setCart }) => {
               onAddToCart={() => handleAddToCart(item)}
             />
           </div>
-          // </Link>
+          
         ))}
       </div>
       <Pagination
