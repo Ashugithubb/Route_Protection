@@ -1,9 +1,10 @@
 import { Outlet, Navigate } from "react-router-dom";
-import { useUser } from "../Component/UserData";
+import { useAppSelector } from "../redux/hooks";  // Your redux hooks path
 
 const ProtectedRoutes = () => {
-    const { isAuthenticated } = useUser();
-    return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoutes;

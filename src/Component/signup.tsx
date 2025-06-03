@@ -1,11 +1,14 @@
 import React from "react";
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
- import { useUser } from "./UserData";
-import '../Style/signup.css';
 
+// import your Redux hooks and actions
+import { useAppDispatch } from "../redux/hooks"; // your typed useDispatch hook
+import { signup } from "../redux/slice/userSlice"; // your Redux signup action
+
+import '../Style/signup.css';
 
 const schema = z.object({
     fullName: z.string().min(1, "Full name is required"),
@@ -22,30 +25,32 @@ const schema = z.object({
     path: ["confirm"],
 });
 
-type FormFeilds = z.infer<typeof schema>;
+type FormFields = z.infer<typeof schema>;
 
 const Signup = () => {
     const navigate = useNavigate();
-    const { signup } = useUser(); 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormFeilds>({
+    const dispatch = useAppDispatch();
+
+    const { register, handleSubmit, formState: { errors } } = useForm<FormFields>({
         resolver: zodResolver(schema),
     });
 
-    const onSubmit: SubmitHandler<FormFeilds> = (data) => {
+    const onSubmit: SubmitHandler<FormFields> = (data) => {
         const userData = {
             fullName: data.fullName,
             email: data.email,
             password: data.password,
         };
-        signup(userData); 
+        dispatch(signup(userData));  // dispatch your Redux action here
         alert("Signup successful!");
         navigate("/login");
     };
 
     return (
         <>
-            <h3>Signup Page</h3>
+           
             <form className='signup' onSubmit={handleSubmit(onSubmit)}>
+                 <h3>Signup Page</h3>
                 <input {...register("fullName")} type="text" placeholder='Full Name' />
                 {errors.fullName && <div className='text-red-500'>{errors.fullName.message}</div>}
 
@@ -59,11 +64,12 @@ const Signup = () => {
                 {errors.confirm && <div className='text-red-500'>{errors.confirm.message}</div>}
 
                 <button id="b11" type="submit">Sign up</button>
-                <Link  to="/login">
+                <Link to="/login">
                     <button id="b21" type="button">Login</button>
                 </Link>
             </form>
         </>
     );
-}
+};
+
 export default Signup;
